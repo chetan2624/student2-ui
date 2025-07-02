@@ -1,0 +1,28 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('code') {
+            steps {
+             git 'https://github.com/Pritam-Khergade/student-ui.git'
+            }
+        }
+        stage('build') {
+            steps {
+                sh ''' 
+                     mvn package'''
+                                
+            }
+        }
+        stage('test') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+        stage('depoly') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+    }
+}
