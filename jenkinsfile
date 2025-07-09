@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('git install') {
+            steps {
+                sh ' sudo apt install git -y '
+            }
+        }
+        stage('code pull') {
+            steps {
+                git 'https://github.com/Pritam-Khergade/student-ui.git'
+            }
+        }
+        stage('build-maven') {
+            steps {
+                sh ''' sudo apt install maven -y  
+                      mvn package'''
+            }
+        }
+        stage('test') {
+            steps {
+             withSonarQubeEnv(installationName: 'sonar', credentialsId: 'sonar-server') {
+               sh '''mvn clean verify sonar:sonar \
+                     -Dsonar.projectKey=student-ui \
+                     -Dsonar.projectName='student-ui' \
+                                                     '''
+
+            }
+        }
+    }    
+        stage('deploy') {
+            steps {
+               deploy adapters: [tomcat9(alternativeDeploymentContext: '', credentialsId: 'tomcat', path: '', url: 'http://52.87.249.121:8080/')], contextPath: '/', war: '**/*.war'
+            }
+        }
+    }
+}
