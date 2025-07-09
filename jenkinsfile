@@ -5,7 +5,7 @@ pipeline {
         stage('git install') {
             steps {
                 sh ' sudo apt install git -y '
-                 echo "message new hello  "
+                 echo "message new hello new  "
             }
         }
         stage('code pull') {
