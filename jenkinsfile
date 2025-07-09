@@ -9,7 +9,7 @@ pipeline {
         }
         stage('code pull') {
             steps {
-                git 'https://github.com/Pritam-Khergade/student-ui.git'
+                git 'https://github.com/chetan2624/student-ui.git'
             }
         }
         stage('build-maven') {
